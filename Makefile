@@ -34,9 +34,13 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8
-lint:
-	flake8 src
+## Download data from data source
+download_data: requirements
+	$(PYTHON_INTERPRETER) src/data/download.py
+
+## Format code using flake8
+format_code:
+	black src	
 
 ## Upload Data to S3
 sync_data_to_s3:
