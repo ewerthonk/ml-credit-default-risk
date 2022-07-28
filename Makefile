@@ -35,8 +35,8 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 ## Download data from data source
-download_data: requirements
-	$(PYTHON_INTERPRETER) src/data/download.py
+get_data: requirements
+	$(PYTHON_INTERPRETER) src/data/get_data.py
 
 ## Format code using flake8
 format_code:

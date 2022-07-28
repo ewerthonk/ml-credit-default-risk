@@ -3,6 +3,11 @@
 
 # external requirements
 black
+ipython
+ipykernel
+pandas
+numpy
+sklearn
 click
 Sphinx
 coverage
