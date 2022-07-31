@@ -5,6 +5,8 @@
 black
 ipython
 ipykernel
+matplotlib
+seaborn
 pandas
 numpy
 sklearn
