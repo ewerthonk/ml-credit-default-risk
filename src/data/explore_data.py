@@ -6,6 +6,7 @@ import pandas as pd
 from scipy.stats import zscore, normaltest, skew, kurtosis
 from pathlib import Path
 from IPython.display import display, Markdown
+import logging
 
 project_directory = Path(__file__).resolve().parents[2]
 data_directory = project_directory / 'data'
@@ -13,8 +14,6 @@ raw_data_directory = data_directory / 'raw'
 interim_data_directory = data_directory / 'interim'
 
 def list_datasets(folder='raw'):
-    """
-"""
     from pathlib import Path
     from IPython.display import display
 
@@ -28,8 +27,6 @@ def overview_data(csv_file_name,
                   display_option='expanded',
                   sample_mode='head',
                   sample_size=10):
-    """"
-"""  
     display_option_validation = ('expanded', 'condensed')
     sample_mode_validation = ('head', 'random')
     
@@ -68,8 +65,6 @@ def overview_data(csv_file_name,
 
 
 def describe_features(dataset, display_option='expanded'):
-    """
-"""
     display_option_validation = ('expanded', 'condensed')
     if display_option not in display_option_validation:
         raise ValueError(f'display_option must be one of {display_option_validation}.')
@@ -102,8 +97,6 @@ def describe_features(dataset, display_option='expanded'):
 
 
 def describe_feature(dataset, feature_or_column, display_option='expanded'):
-    """
-"""
     display_option_validation = ('expanded', 'condensed')
     if display_option not in display_option_validation:
         raise ValueError(f'display_option must be one of {display_option_validation}.')
@@ -134,8 +127,6 @@ def describe_feature(dataset, feature_or_column, display_option='expanded'):
     
 
 def create_dataframe(folder, csv_file_name):
-    """
-"""
     path_to_csv_file = Path(data_directory / folder / csv_file_name)
     df = pd.read_csv(path_to_csv_file)
 
@@ -143,8 +134,6 @@ def create_dataframe(folder, csv_file_name):
 
 
 def determine_type(df, feature):
-    """
-"""
     # Special Cases
     if feature == 'SK_ID_CURR':
         return 'id'
@@ -160,8 +149,6 @@ def determine_type(df, feature):
     
 
 def sum_quantile_outliers(df, feature, return_type):
-    """
-"""
     if issubclass(df[feature].dtype.type, np.float_):
         Q1 = df[feature].quantile(0.25)
         Q3 = df[feature].quantile(0.75)
@@ -181,8 +168,6 @@ def sum_quantile_outliers(df, feature, return_type):
         
 
 def sum_z_outliers(df, feature):
-    """
-"""
     if issubclass(df[feature].dtype.type, np.float_):
         zscores = zscore(df[feature]).abs()
         z_outliers_amount = len(zscores[zscores > 3])
@@ -192,8 +177,6 @@ def sum_z_outliers(df, feature):
 
 
 def test_normality(df, feature, alpha=0.05):
-    """
-"""
     if issubclass(df[feature].dtype.type, np.float_):
         _, pvalue = normaltest(df[feature])
 
@@ -206,8 +189,6 @@ def test_normality(df, feature, alpha=0.05):
 
 
 def calculate_skewness(df, feature):
-    """
-"""
     if issubclass(df[feature].dtype.type, np.float_):
         return round(kurtosis(df[feature], nan_policy='omit'), 2)
     else:
@@ -218,14 +199,12 @@ def calculate_kurtosis(df, feature):
     """
 """
     if issubclass(df[feature].dtype.type, np.float_):
-        return round(skew(df[feature], nan_policy='omit'), 2)
+        return np.round(skew(df[feature], nan_policy='omit'), 2)
     else:
         return ' '
 
 
 def calculate_correlation(df, feature):
-    """
-"""
     if issubclass(df[feature].dtype.type, np.number):
         return round(df[feature].corr(df['TARGET']), 2)
     else:
@@ -233,8 +212,6 @@ def calculate_correlation(df, feature):
 
 
 def create_exploratory_dataset(dataset_for_analysis='application_train.csv'):
-    """
-    """
     df = create_dataframe('raw', dataset_for_analysis)
 
     df_exploratory = pd.read_csv(raw_data_directory / 'HomeCredit_columns_description.csv', index_col=0)
@@ -248,8 +225,8 @@ def create_exploratory_dataset(dataset_for_analysis='application_train.csv'):
     df_exploratory['NanPercentage'] = (df_exploratory['Column'].map(df.isnull().mean().round(4))) * 100
     df_exploratory['DataType'] = df_exploratory['Column'].map(df.dtypes)
     df_exploratory['FeatureType'] = df_exploratory['Column'].map(lambda column: determine_type(df, column))
-    df_exploratory['LowerOutliers'] = df_exploratory['Column'].map(lambda column: sum_quantile_outliers(df, column, return_type='lower'))
-    df_exploratory['UpperOutliers'] = df_exploratory['Column'].map(lambda column: sum_quantile_outliers(df, column, return_type='upper'))
+    df_exploratory['Q1Outliers'] = df_exploratory['Column'].map(lambda column: sum_quantile_outliers(df, column, return_type='lower'))
+    df_exploratory['Q3Outliers'] = df_exploratory['Column'].map(lambda column: sum_quantile_outliers(df, column, return_type='upper'))
     df_exploratory['Z3Outliers'] = df_exploratory['Column'].map(lambda column: sum_z_outliers(df, column))
     df_exploratory['NormalDistribution'] = df_exploratory['Column'].map(lambda column: test_normality(df, column))
     df_exploratory['Skewness'] = df_exploratory['Column'].map(lambda column: calculate_skewness(df, column))
@@ -260,30 +237,23 @@ def create_exploratory_dataset(dataset_for_analysis='application_train.csv'):
 
 
 def create_decision_dataset():
-    """
-    """
     if not (interim_data_directory / 'application_exploratory.csv').is_file():
         create_exploratory_dataset()
     df_decision = create_dataframe('interim', 'application_exploratory.csv')
 
     # Nan Decision
     conditions = (df_decision['NanPercentage']>30,
-                (df_decision['NanPercentage']>0) & (df_decision['DataType']=='object'),
-                (df_decision['NanPercentage']>0) & (df_decision['DataType']!='object'))
-    values = ('drop', 'most_frequent', 'mean')
+                 (df_decision['NanPercentage']>0) & (df_decision['DataType']=='object'),
+                 (df_decision['NanPercentage']>0) & (df_decision['DataType']!='object'))
+    values = ('drop', 'frequent', 'median')
     df_decision['NanDecision'] = np.select(conditions, values, default=' ')
+    ## Exceptions
+    df_decision.loc[df_decision['Column']=='CODE_GENDER',['NanDecision']] = 'frequent'
+    df_decision.loc[df_decision['Column']=='NAME_FAMILY_STATUS',['NanDecision']] = 'frequent'
+    df_decision.loc[df_decision['Column']=='ORGANIZATION_TYPE',['NanDecision']] = 'random'
 
-    # Data Type Decision
-    cols_with_hidden_nans = {'CODE_GENDER': 'XNA', 'NAME_TYPE_SUITE': 'NaN', 'NAME_FAMILY_STATUS': 'Unknown', 'ORGANIZATION_TYPE': 'XNA'}
-    exceptions = ('NAME_EDUCATION_TYPE', 'WEEKDAY_APPR_PROCESS_START')
-    conditions = ((~df_decision['Column'].isin(exceptions)) & ~df_decision['Column'].isin(cols_with_hidden_nans)
-                & (df_decision['DataType']=='object') & (df_decision['NanDecision']!='drop'),
-                df_decision['Column'].isin(exceptions) & ~df_decision['Column'].isin(cols_with_hidden_nans),
-                df_decision['Column'].isin(cols_with_hidden_nans))
-    values = ('OneHotEncoder', 'OrdinalEncoder', 'clean and then OneHotEncoder')
-    df_decision['TypeDecision'] = np.select(conditions, values, default=' ')
-    ## Target
-    df_decision.loc[df_decision['Column']=='TARGET', 'TypeDecision'] = 'sample'
+    # DataType Decision
+    df_decision['TypeDecision'] = np.where((df_decision['DataType']=='object') & (df_decision['NanDecision']!='drop'), 'OrdinalEncoder', ' ')
 
     # Outliers Decision (arbitrary)
     cols_with_high_outliers = ('AMT_INCOME_TOTAL', 'AMT_CREDIT', 'REGION_POPULATION_RELATIVE', 'DAYS_REGISTRATION') # Z-score higher than 3
@@ -292,6 +262,34 @@ def create_decision_dataset():
     # Correlation Decision
     df_decision['CorrDecision'] = ' '
     df_decision['CorrDecision'] = np.where(df_decision['Column'].str.startswith('FLAG_DOCUMENT_'), 'group', ' ')
-    df_decision = df_decision.loc[:,('Column', 'NanDecision', 'TypeDecision', 'OutliersDecision', 'CorrDecision')]
+    df_decision.loc[df_decision['Column']=='SK_ID_CURR',['CorrDecision']] = 'drop'
 
+    # New Features
+    new_features = pd.DataFrame({
+        'Column': ['AMT_CREDIT_div_AMT_ANNUITY','AMT_INCOME_TOTAL_div_AMT_CREDIT', 'AMT_INCOME_TOTAL_div_CNT_FAM_MEMBERS'],
+        'TypeDecision': 3*['create']}
+    )
+    df_decision = pd.concat((df_decision, new_features), ignore_index=True) 
+    df_decision.fillna(value=' ', inplace=True)
+
+    # Extras
+    cols_with_hidden_nans = ('CODE_GENDER', 'NAME_FAMILY_STATUS', 'ORGANIZATION_TYPE')
+    df_decision['Extras'] = np.where(df_decision['Column'].isin(cols_with_hidden_nans), 'identify hidden nans', ' ')
+
+    # Removing columns from df_exploratory
+    df_decision = df_decision.loc[:,('Column', 'NanDecision', 'TypeDecision', 'OutliersDecision', 'CorrDecision', 'Extras')]
+
+    #Saving DataFrame
     df_decision.to_csv(interim_data_directory / 'application_decision.csv', index=False)
+
+
+def main():
+    create_exploratory_dataset()
+    logging.info('Exploratory Dataset is now available on /data/interim folder')
+    create_decision_dataset()
+    logging.info('Decision Dataset is now available on /data/interim folder')
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+    main()

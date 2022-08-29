@@ -5,11 +5,8 @@ import os
 import logging
 from pathlib import Path
 import shutil
-from dotenv import find_dotenv, load_dotenv
 
 def main():
-    """"
-"""
     url = 'https://drive.google.com/file/d/17fyteuN2MdGdbP5_Xq_sySN_yH91vTup/view?usp=sharing'
     output = os.fspath(raw_data_directory)+'/credito-imoves.zip'
     gdown.download(url=url, output=output, fuzzy=True)

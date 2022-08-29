@@ -3,6 +3,9 @@
 
 # external requirements
 black
+xgboost
+catboost
+lightgbm
 ipython
 ipykernel
 matplotlib
@@ -13,6 +16,7 @@ pandas
 scipy
 seaborn
 numpy
+joblib
 sklearn
 click
 Sphinx

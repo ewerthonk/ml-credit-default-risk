@@ -25,38 +25,30 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
-## Make Dataset
-data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
-
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
 ## Download data from data source
-get_data: requirements
+data: requirements
 	$(PYTHON_INTERPRETER) src/data/get_data.py
 
-## Format code using flake8
+## Download data from data source
+explore: get_data
+	$(PYTHON_INTERPRETER) src/data/explore_data.py
+
+## Run Pipelines
+pipeline: explore_data
+	$(PYTHON_INTERPRETER) src/features/pipeline.py
+
+## Create Models
+models: pipeline
+	$(PYTHON_INTERPRETER) src/models/models.py
+
+## Format code using Black
 format_code:
 	black src	
-
-## Upload Data to S3
-sync_data_to_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync data/ s3://$(BUCKET)/data/
-else
-	aws s3 sync data/ s3://$(BUCKET)/data/ --profile $(PROFILE)
-endif
-
-## Download Data from S3
-sync_data_from_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync s3://$(BUCKET)/data/ data/
-else
-	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
-endif
 
 ## Set up python interpreter environment
 create_environment:
@@ -79,12 +71,6 @@ endif
 ## Test python environment is setup correctly
 test_environment:
 	$(PYTHON_INTERPRETER) src/environment/test_environment.py
-
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
-
 
 #################################################################################
 # Self Documenting Commands                                                     #
