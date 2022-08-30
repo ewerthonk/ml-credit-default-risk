@@ -8,31 +8,19 @@
   - [🧾 Table of Contents](#-table-of-contents)
   - [👨🏻‍🏫 Introduction](#-introduction)
   - [🗺 Project](#-project)
-  - [### 0. Framework](#-0-framework)
     - [1. Frame the Problem](#1-frame-the-problem)
-  - [### Challenges and Solutions](#-challenges-and-solutions)
     - [2. Get the Data](#2-get-the-data)
-  - [#### Challenges and Solutions](#-challenges-and-solutions-1)
     - [3. Exploratory Data Analysis](#3-exploratory-data-analysis)
-  - [#### Challenges and Solutions](#-challenges-and-solutions-2)
     - [4. Prepare the data](#4-prepare-the-data)
-  - [#### Pipeline](#-pipeline)
     - [5. Model Selection and Training](#5-model-selection-and-training)
-  - [#### Models](#-models)
     - [6. Fine-tune the Model](#6-fine-tune-the-model)
-  - [#### Final Model](#-final-model)
     - [7-8. Presenting the Solution](#7-8-presenting-the-solution)
-      - [Final Report.md](#final-reportmd)
-  - [## 🔧 Methods](#--methods)
+  - [🔧 Methods](#--methods)
   - [🗄 Reproducibility: Make and Folder Structure](#-reproducibility-make-and-folder-structure)
-  - [#### To reproduce the project](#-to-reproduce-the-project)
-  - [#### Folder Structure](#-folder-structure)
   - [📚 Learnings](#-learnings)
   - [🛣 Roadmap](#-roadmap)
 
-
-
-## 👨🏻‍🏫 Introduction
+## 👨🏻‍🏫 Introduction 
 [Home Credit](https://www.homecredit.net) is a multinational company with a simple business model: lend money. Generally, to customers with little or no credit history.
 
 One of the cornerstones of their business model is the **predictive power of the data they possess**. They are making some of this data available online aiming to unlock its full potential, *a.k.a. deliver value from it*. In our case, we got a sample of this data to apply the data science/machine learning process on it with the intention to extract value from it and practice our learnings.
@@ -46,65 +34,55 @@ The main goal is to use the made-available data to predict if an applicant will 
 
 ## 🗺 Project
 ### 0. Framework
-------------
 ![Process Framework](../references/ML-Process.png)
 
 ### 1. Frame the Problem
 [1.0-ejk-framing-the-problem.ipynb](../notebooks/1.0-ejk-framing-the-problem.ipynb)
 
 ### Challenges and Solutions
-------------
 ![Frame the Problem](../references/ml-credit-default-risk%20-%201.jpg)
 
 ### 2. Get the Data
 [2.0-ejk-getting-the-data.ipynb](../notebooks/2.0-ejk-getting-the-data.ipynb)
 
 #### Challenges and Solutions
-------------
 ![Get the Data](../references/ml-credit-default-risk%20-%202.jpg)
 
 ### 3. Exploratory Data Analysis
 [3.0-ejk-eda-applications.ipynb](../notebooks/3.0-ejk-eda-applications.ipynb)
 
 #### Challenges and Solutions
-------------
 ![Exploratory Data Analysis](../references/ml-credit-default-risk%20-%203.jpg)
 
 ### 4. Prepare the data
 [4.0-ejk-preparing-data-and-selecting-models.ipynb](../notebooks/4.0-ejk-preparing-data-and-selecting-models.ipynb)
 
 #### Pipeline
-------------
 ![Preparing the Data](../references/ml-credit-default-risk%20-%204.jpg)
 
 ### 5. Model Selection and Training
 [4.0-ejk-preparing-data-and-selecting-models.ipynb](../notebooks/4.0-ejk-preparing-data-and-selecting-models.ipynb)
 
 #### Models
-------------
 ![Model Selection](../references/ml-credit-default-risk%20-%205.jpg)
 
 ### 6. Fine-tune the Model 
 [5.0-ejk-fine-tunning-the-model.ipynb](../notebooks/5.0-ejk-fine-tunning-the-model.ipynb)
 
 #### Final Model
-------------
 ![Final Model](../references/ml-credit-default-risk%20-%206.jpg)
 
 ### 7-8. Presenting the Solution
-#### [Final Report.md](Final%20Report.md)
+[Final Report.md](Final%20Report.md)
 
 ## 🔧 Methods
-------------
 ![Methods](../references/ml-credit-default-risk%20-%20Methods.jpg)
 
 ## 🗄 Reproducibility: Make and Folder Structure
 #### To reproduce the project
-------------
 ![make](../references/ml-credit-default-risk%20-%20Make.jpg)
 
 #### Folder Structure
-------------
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data`
