@@ -31,19 +31,19 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 ## Download data from data source
-data: requirements
+data:
 	$(PYTHON_INTERPRETER) src/data/get_data.py
 
 ## Download data from data source
-explore: get_data
+explore: data/raw/application_train.csv
 	$(PYTHON_INTERPRETER) src/data/explore_data.py
 
 ## Run Pipelines
-pipeline: explore_data
+pipeline: data/interim/application_decision.csv
 	$(PYTHON_INTERPRETER) src/features/pipeline.py
 
 ## Create Models
-models: pipeline
+models: data/interim/classifiers.csv
 	$(PYTHON_INTERPRETER) src/models/models.py
 
 ## Format code using Black

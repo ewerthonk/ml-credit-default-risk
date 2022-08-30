@@ -75,7 +75,7 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# exclude everything in every folder
+# exclude everything in every folder of data
 /data/**/*.*
 
 # include only .gitkeep files
@@ -83,6 +83,10 @@ target/
 
 # Mac OS-specific storage files
 .DS_Store
+
+# Catboost stuff
+catboost_info/
+/notebook/catboost_info/
 
 # vim
 *.swp
