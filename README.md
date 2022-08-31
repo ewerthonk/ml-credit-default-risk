@@ -44,6 +44,8 @@ The main goal is to use the made-available data to predict if an applicant will 
 
 ![Frame the Problem2](/references/ml-credit-default-risk%20-%20Frame%201.jpg)
 
+![Frame the Problem3](/references/ml-credit-default-risk%20-%20Frame%201-2.jpg)
+
 ### 2. Get the Data
 [2.0-ejk-getting-the-data.ipynb](/notebooks/2.0-ejk-getting-the-data.ipynb)
 
