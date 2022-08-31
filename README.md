@@ -39,7 +39,7 @@ The main goal is to use the made-available data to predict if an applicant will 
 ### 1. Frame the Problem
 [1.0-ejk-framing-the-problem.ipynb](/notebooks/1.0-ejk-framing-the-problem.ipynb)
 
-### Challenges and Solutions
+#### Challenges and Solutions
 ![Frame the Problem](/references/ml-credit-default-risk%20-%201.jpg)
 
 ### 2. Get the Data
