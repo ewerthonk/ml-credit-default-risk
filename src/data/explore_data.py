@@ -85,7 +85,7 @@ def describe_features(dataset, display_option="expanded"):
         raise ValueError(f"display_option must be one of {display_option_validation}.")
 
     path_to_csv_file = Path(raw_data_directory / "HomeCredit_columns_description.csv")
-    df = pd.read_csv(path_to_csv_file, index_col=0)
+    df = pd.read_csv(path_to_csv_file, index_col=0, encoding_errors="ignore")
     df.reset_index(drop=True, inplace=True)
     df.rename(columns={"Table": "Dataset", "Row": "Column"}, inplace=True)
     pd.reset_option("display.max_rows")
