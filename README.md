@@ -4,8 +4,6 @@
 </div>
 
 ## 🧾 Table of Contents
-- [Machine Learning - Home Credit Default Risk](#machine-learning---home-credit-default-risk)
-  - [🧾 Table of Contents](#-table-of-contents)
   - [👨🏻‍🏫 Introduction](#-introduction)
   - [🗺 Project](#-project)
     - [1. Frame the Problem](#1-frame-the-problem)
