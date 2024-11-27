@@ -11,6 +11,7 @@
 *Predicting customer credit default with Machine Learning: a model garden exploration.*
 
 # 📖 Project
+
 ## 👨🏻‍🏫 Introduction
 [Home Credit](https://www.homecredit.net) is a multinational company with a simple business model: lend money. Generally, to customers with little or no credit history.
 
