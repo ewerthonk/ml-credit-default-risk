@@ -1,5 +1,7 @@
 # Machine Learning - Home Credit Default Risk
 
+*Predicting customer credit default with Machine Learning: a model garden exploration.*
+
 <div align="center">
 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
 <img src="https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white">
@@ -8,16 +10,14 @@
 <img src="https://img.shields.io/badge/lightgbm-%2300BAA4.svg?style=for-the-badge&logo=leaf&logoColor=white">
 </div>
 
-*Predicting customer credit default with Machine Learning: a model garden exploration.*
-
 # 📖 Project
 
-## 👨🏻‍🏫 Introduction
+### 👨🏻‍🏫 Introduction
 [Home Credit](https://www.homecredit.net) is a multinational company with a simple business model: lend money. Generally, to customers with little or no credit history.
 
 One of the cornerstones of their business model is the **predictive power of the data they possess**. They are making some of this data available online aiming to unlock its full potential. In our case, we got a sample of this data to apply the data mining process on it with the intention to extract value.
 
-## 🎯 Goal
+### 🎯 Goal
 The main goal is to use data to predict if an applicant will have trouble to pay their debt. This objective is cascaded into:
 
 1. Creating a Machine Learning model that is good at distinguishing between classes: in our case, distinguishing a good applicant to a loan from a bad one.
