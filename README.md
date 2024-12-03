@@ -1,6 +1,10 @@
 # Machine Learning - Home Credit Default Risk
 
-*Predicting customer credit default with Machine Learning: a model garden exploration.*
+<div align="center">
+  <em>Predicting customer credit default with Machine Learning: a model garden exploration.</em>
+</div>
+
+<br>
 
 <div align="center">
 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
